@@ -17,38 +17,8 @@ buildscript {
 
 repositories {   
     maven {
-        name "rx14"
-        url "http://mvn.rx14.co.uk/repo/"
-    }
-    
-    maven {
-        name "oc"
-        url "http://maven.cil.li/"
-    }
-    maven {
-        name "Mobius"
-        url "http://mobiusstrip.eu/maven/"
-    }
-    maven {
         name "chickenbones"
         url "http://chickenbones.net/maven/"
-    }
-    maven {
-        name "projectred"
-        url "http://files.projectredwiki.com/maven/"
-    }
-    
-    ivy {
-        name "redlogic"
-        artifactPattern "https://dl.dropboxusercontent.com/u/2944265/mods/autobuilt/files/redlogic/[module]-[revision].[ext]"
-    }
-    ivy {
-        name "immibis-core"
-        artifactPattern "https://dl.dropboxusercontent.com/u/2944265/mods/autobuilt/files/[module]-[revision].[ext]"
-    }
-    ivy {
-        name "BuildCraft"
-        artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
     }
 }
 
@@ -69,27 +39,7 @@ minecraft {
 }
 
 dependencies {
-
     compile "codechicken:CodeChickenLib:${mcVersion}-${cclVersion}:dev"
-    compile "codechicken:CodeChickenCore:${mcVersion}-${cccVersion}:dev"
-    compile "codechicken:ForgeMultipart:${mcVersion}-${fmpVersion}:dev"
-    compile "codechicken:NotEnoughItems:${mcVersion}-${neiVersion}:dev"
-    
-    compile "mcp.mobius.waila:Waila:${wailaVersion}_${mcVersion}"
-
-    compile("mrtjp:ProjectRed:${mcVersion}-${projectredVersion}:dev") {
-        exclude group: "cofh"
-        exclude group: "thermalexpansion"
-        exclude group: "tconstruct"
-        exclude group: "codechicken"
-    }
-
-    compile "qmunity:QmunityLib:${qmlVersion}:deobf"
-    compile "com.bluepowermod:BluePower:${bluepowerVersion}:deobf"
-    compile "li.cil.oc:OpenComputers:MC${mcVersion}-${ocVersion}:dev"
-    compile name: "redlogic", version: "${redlogicVersion}", ext: "jar"
-    compile name: "immibis-core", version: "${imcVersion}", ext: "jar"
-    compile name: "buildcraft", version: "${buildcraftVersion}", classifier: "dev"
 }
 
 processResources {
@@ -106,15 +56,6 @@ processResources {
     }
 }
 
-def commonManifest = manifest {
-    attributes 'FMLCorePlugin': 'moe.nightfall.vic.integratedcircuits.asm.FMLLoadingPlugin'
-    attributes 'FMLCorePluginContainsFMLMod': 'true'
-}
-
-jar {
-    manifest = commonManifest
-}
-
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
@@ -123,7 +64,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
-    manifest = commonManifest
 }
 
 artifacts {
